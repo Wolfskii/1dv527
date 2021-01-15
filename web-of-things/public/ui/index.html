@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Network Central WoT-device</title>
+</head>
+
+<body>
+    <header>
+        <h1>Network Central WoT-device</h1>
+    </header>
+
+    <section>
+        <h3>Sensor data</h3>
+
+        <div class="card">
+            <h3>Temperature</h3>
+            <p id="temp">-</p>
+        </div>
+    
+        <div class="card">
+            <h3>Humidity</h3>
+            <p id="humidity">-</p>
+        </div>
+    
+        <div>
+            <p>Above data retrieved:</p>
+            <p id="timestamp"></p>
+        </div>
+    </section>
+
+    <section>
+        <h3>Bluetooth speaker</h3>
+        <form method="post">
+            <div>
+                <label for="name" id="name">Your name:</label>
+                <input type="text" id="name" name="name" minlength="4" size="30">
+            </div>
+
+            <div>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+            </div>
+
+            <div>
+                <button  type="submit" formaction="/actions/speaktemp" id="speak-temp">Speak temperature</button>
+                <button  type="submit" formaction="/actions/speakhumidity" id="speak-hum">Speak humidity</button>
+                <button  type="submit"  formaction="/actions/speakall" id="speak-both">Speak both</button>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>Created as a project in course 1DV527 by Dawid Kaleta (DK222JF) att Linnaeus University in Kalmar, Sweden</p>
+    </footer>
+
+</body>
+
+</html>
+<script src="script.js" async defer></script>

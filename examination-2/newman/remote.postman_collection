@@ -1,0 +1,695 @@
+{
+	"info": {
+		"_postman_id": "48106425-c700-44e4-8de2-a418abdf41cc",
+		"name": "FishClub - localhost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createFishNotLoggedIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e01923ba-7ca4-44d6-bf74-306f3177c68f",
+						"exec": [
+							"const resMessage = \"Access denied, you need to log in\";\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 401\"] = responseCode.code === 401;\r",
+							"tests[\"Gets the correct res status\"] = resMessage === responseBody;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"longitude\": 102,\n\t\"latitude\": 789,\n\t\"specie\": \"Trout\",\n\t\"weight\": 7,\n\t\"length\": 177,\n\t\"image\": \"https://i0.wp.com/fishingbooker.com/blog/media/Rainbow-Trout.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/fishes"
+			},
+			"response": []
+		},
+		{
+			"name": "registerUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f334a3f-b65e-41e2-ba70-f45c82e3006b",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const message = \"User created succesfully\";\r",
+							"const name = \"John Doe\";\r",
+							"const email = \"name@email.com\";\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Message tells that user was created succesfully\"] = resJson.message === message;\r",
+							"tests[\"Name is correct and output\"] = resJson.name === name;\r",
+							"tests[\"Email is correct and output\"] = resJson.email === email;\r",
+							"tests[\"_shortId created for new user\"] = resJson._shortId;\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"John Doe\",\n\t\"email\": \"name@email.com\",\n\t\"password\": \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/users/register"
+			},
+			"response": []
+		},
+		{
+			"name": "createHook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09a0cd58-0839-411e-b75b-a6fc7b1112ef",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const url = \"https://webhook.site/f15913be-4f73-47a4-95f7-92bc904f71a5\";\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"URL is correct and output in the response\"] = resJson.url === url;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\": \"https://webhook.site/f15913be-4f73-47a4-95f7-92bc904f71a5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/fishes/hook"
+			},
+			"response": []
+		},
+		{
+			"name": "loginUserWrongDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6dfe60d5-cf57-494c-b370-e39eb717f8d8",
+						"exec": [
+							"const resMessage = \"Email or password is wrong\";\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 400\"] = responseCode.code === 400;\r",
+							"tests[\"Tells that email or password is wrong\"] = resMessage === responseBody;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"kungen@hovet.se\",\n\t\"password\": \"GissatLösenord\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/users/login"
+			},
+			"response": []
+		},
+		{
+			"name": "loginUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6dfe60d5-cf57-494c-b370-e39eb717f8d8",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const expiresIn = 3600;\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 303\"] = responseCode.code === 303;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Auth Token was generated and sent back\"] = resJson.authToken;\r",
+							"tests[\"Expiration time for token set to 3600s\"] = resJson.expiresIn === expiresIn;\r",
+							"tests[\"Self link with empty href for current location\"] = resJson.links.self.href === \"\";\r",
+							"\r",
+							"// Set auth-token for other tests\r",
+							"pm.collectionVariables.set(\"auth-token\", postman.getResponseHeader(\"auth-token\"));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"kungen@hovet.se\",\n\t\"password\": \"GurraGurra\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/users/login"
+			},
+			"response": []
+		},
+		{
+			"name": "createFishLoggedIn1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad541308-d58d-4493-9ec7-4e3a98238a61",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const fisherman = \"Carl Gustaf\";\r",
+							"const fishermanId = \"daQFjs\";\r",
+							"const longitude = 72;\r",
+							"const latitude = 15;\r",
+							"const specie = \"Seabass\";\r",
+							"const weight = 8;\r",
+							"const length = 144;\r",
+							"const imageUrl = \"https://i0.wpddadawdawdadadadak.jpg\";\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fisherman is correct and output\"] = resJson.fisherman === fisherman;\r",
+							"tests[\"FishermanId is correct and output\"] = resJson.fishermanId === fishermanId;\r",
+							"tests[\"Longitude is correct and output\"] = resJson.longitude === longitude;\r",
+							"tests[\"Latitude is correct and output\"] = resJson.latitude === latitude;\r",
+							"tests[\"Specie is correct and output\"] = resJson.specie === specie;\r",
+							"tests[\"Weight is correct and output\"] = resJson.weight === weight;\r",
+							"tests[\"Length is correct and output\"] = resJson.length === length;\r",
+							"tests[\"Image URL is correct and output\"] = resJson.image === imageUrl;\r",
+							"tests[\"Self link is output\"] = resJson.links.self;\r",
+							"tests[\"Fishermans link is output\"] = resJson.links.user;\r",
+							"tests[\"Date and time created is output\"] = resJson.datetime;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b2336ce6-8429-489e-bc38-ac6cbc7bba92",
+						"exec": [
+							"pm.request.headers.add({\r",
+							"key: 'auth-token',\r",
+							"value: pm.collectionVariables.get(\"auth-token\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"longitude\": 72,\n\t\"latitude\": 15,\n\t\"specie\": \"Seabass\",\n\t\"weight\": 8,\n\t\"length\": 144,\n\t\"image\": \"https://i0.wpddadawdawdadadadak.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/fishes"
+			},
+			"response": []
+		},
+		{
+			"name": "createFishLoggedIn2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4231e885-8339-4eb7-b18f-f04fffe44696",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const fisherman = \"Carl Gustaf\";\r",
+							"const fishermanId = \"daQFjs\";\r",
+							"const longitude = 16;\r",
+							"const latitude = 349;\r",
+							"const specie = \"Eel\";\r",
+							"const weight = 2;\r",
+							"const length = 232;\r",
+							"const imageUrl = \"https://i0.wp.com/fishingbooker.com/blog/media/eel.jpg\";\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fisherman is correct and output\"] = resJson.fisherman === fisherman;\r",
+							"tests[\"FishermanId is correct and output\"] = resJson.fishermanId === fishermanId;\r",
+							"tests[\"Longitude is correct and output\"] = resJson.longitude === longitude;\r",
+							"tests[\"Latitude is correct and output\"] = resJson.latitude === latitude;\r",
+							"tests[\"Specie is correct and output\"] = resJson.specie === specie;\r",
+							"tests[\"Weight is correct and output\"] = resJson.weight === weight;\r",
+							"tests[\"Length is correct and output\"] = resJson.length === length;\r",
+							"tests[\"Image URL is correct and output\"] = resJson.image === imageUrl;\r",
+							"tests[\"Self link is output\"] = resJson.links.self;\r",
+							"tests[\"Fishermans link is output\"] = resJson.links.user;\r",
+							"tests[\"Date and time created is output\"] = resJson.datetime;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e87daf38-8827-4607-8036-b1b335520e3c",
+						"exec": [
+							"pm.request.headers.add({\r",
+							"key: 'auth-token',\r",
+							"value: pm.collectionVariables.get(\"auth-token\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"longitude\": 16,\n\t\"latitude\": 349,\n\t\"specie\": \"Eel\",\n\t\"weight\": 2,\n\t\"length\": 232,\n\t\"image\": \"https://i0.wp.com/fishingbooker.com/blog/media/eel.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/fishes"
+			},
+			"response": []
+		},
+		{
+			"name": "getFishes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8fa79591-9f76-4a9b-a69b-b40c983aac0b",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fishes object exists\"] = resJson.fishes;\r",
+							"tests[\"Links object exists\"] = resJson.links;\r",
+							"tests[\"editFish link-append from current URL is correct\"] = resJson.links.editFish.href === \"/:shortId\";\r",
+							"tests[\"editFish link method is correct (PUT)\"] = resJson.links.editFish.method === \"PUT\";\r",
+							"tests[\"editFish link description is correct\"] = resJson.links.editFish.desc === \"Change a fish if logged in and is yours\";\r",
+							"tests[\"editFish link params are correct\"] = resJson.links.editFish.params === \"{shortId}, {longitude}, {latitude}, {specie}, {weight}, {lenght}, {image}\";\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://fishclub.glitch.me/api/fishes"
+			},
+			"response": []
+		},
+		{
+			"name": "getUserDataNotLoggedIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ce72779-c86c-4e4a-8541-341585ced725",
+						"exec": [
+							"const resMessage = \"Access denied, you need to log in\";\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 401\"] = responseCode.code === 401;\r",
+							"tests[\"Gets the correct res status\"] = resMessage === responseBody;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://fishclub.glitch.me/api/users/daQFjs"
+			},
+			"response": []
+		},
+		{
+			"name": "getUserDataLoggedIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "396bf13b-2bd7-4d55-b0f5-0336df4fee3e",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fishes object exists\"] = resJson._shortId === \"daQFjs\";\r",
+							"tests[\"Links object exists\"] = resJson.name === \"Carl Gustaf\";\r",
+							"tests[\"Links object exists\"] = resJson.email === \"kungen@hovet.se\";\r",
+							"tests[\"rel self link exists and is output\"] = resJson.links.self;\r",
+							"tests[\"Date and time created is output\"] = resJson.date;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c6ccc117-ea53-4eb4-a27a-4861378354d8",
+						"exec": [
+							"pm.request.headers.add({\r",
+							"key: 'auth-token',\r",
+							"value: pm.collectionVariables.get(\"auth-token\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://fishclub.glitch.me/api/users/daQFjs"
+			},
+			"response": []
+		},
+		{
+			"name": "getSpecificFishById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c1948bd-15af-404f-b57b-2253166703c6",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const fisherman = \"Carl Gustaf\";\r",
+							"const fishermanId = \"daQFjs\";\r",
+							"const longitude = 323;\r",
+							"const latitude = 23;\r",
+							"const specie = \"Tuna\";\r",
+							"const weight = 12;\r",
+							"const length = 210;\r",
+							"const imageUrl = \"https://i.ytimg.com/vi/y-Wj685wPIY/maxresdefault.jpg\";\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fisherman is correct and output\"] = resJson.fisherman === fisherman;\r",
+							"tests[\"FishermanId is correct and output\"] = resJson.fishermanId === fishermanId;\r",
+							"tests[\"Longitude is correct and output\"] = resJson.longitude === longitude;\r",
+							"tests[\"Latitude is correct and output\"] = resJson.latitude === latitude;\r",
+							"tests[\"Specie is correct and output\"] = resJson.specie === specie;\r",
+							"tests[\"Weight is correct and output\"] = resJson.weight === weight;\r",
+							"tests[\"Length is correct and output\"] = resJson.length === length;\r",
+							"tests[\"Image URL is correct and output\"] = resJson.image === imageUrl;\r",
+							"tests[\"Self link is output\"] = resJson.links.self;\r",
+							"tests[\"Fishermans link is output\"] = resJson.links.user;\r",
+							"tests[\"Date and time created is output\"] = resJson.datetime;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://fishclub.glitch.me/api/fishes/gawgHE"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteSpecificFishById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47b40329-968b-4a14-b3b3-136b86445d43",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const fisherman = \"Carl Gustaf\";\r",
+							"const specie = \"Rainbow Trout\";\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200; // Kan även vara 204 om man inte skickar tillbaka det gamla objektet\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fisherman is correct and output\"] = resJson.removedFish.fisherman === fisherman;\r",
+							"tests[\"Specie is correct and output\"] = resJson.removedFish.specie === specie;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "07f58775-903b-4ab9-8dd5-fd26bf6f65a9",
+						"exec": [
+							"pm.request.headers.add({\r",
+							"key: 'auth-token',\r",
+							"value: pm.collectionVariables.get(\"auth-token\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://fishclub.glitch.me/api/fishes/dasUsk"
+			},
+			"response": []
+		},
+		{
+			"name": "editFishData",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9fc25a6-46ce-4ee3-ad89-31fd0e835cc2",
+						"exec": [
+							"const resJson = JSON.parse(responseBody);\r",
+							"\r",
+							"const fisherman = \"Carl Gustaf\";\r",
+							"const specie = \"Barracuda\";\r",
+							"\r",
+							"\r",
+							"// Tests go here\r",
+							"tests[\"Status code is 200\"] = responseCode.code === 200; // Kan även vara 204 om man inte skickar tillbaka det gamla objektet\r",
+							"tests[\"Content-Type is JSON\"] = 'application/json; charset=utf-8' === postman.getResponseHeader(\"Content-Type\");\r",
+							"tests[\"Rate limit is set to 100\"] = '100' === postman.getResponseHeader(\"x-ratelimit-limit\");\r",
+							"tests[\"Still have rate limit tries left\"] = '0' < postman.getResponseHeader(\"x-ratelimit-remaining\");\r",
+							"\r",
+							"tests[\"Fisherman is correct and output\"] = resJson.updatedFish.fisherman === fisherman;\r",
+							"tests[\"Specie is correct and output\"] = resJson.updatedFish.specie === specie;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "de6e50c8-c29b-4056-a087-c09811f5846b",
+						"exec": [
+							"pm.request.headers.add({\r",
+							"key: 'auth-token',\r",
+							"value: pm.collectionVariables.get(\"auth-token\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"longitude\": 1,\n\t\"latitude\": 2,\n\t\"specie\": \"Barracuda\",\n\t\"weight\": 3,\n\t\"length\": 4,\n\t\"image\": \"https://i0.wp.com/fbarracuda.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://fishclub.glitch.me/api/fishes/fawfGEA"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5ed4893e-5e3a-4ea7-b16a-3c7111bebb85",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ec26d9d8-0f50-4282-8219-69ea86310519",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c9088853-525a-4a92-ac1a-6bf14b07979d",
+			"key": "auth-token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTgwZTgyODhkYWE4MjM2ZTg0YjRkMDUiLCJfc2hvcnRJZCI6ImRhUUZqcyIsIm5hbWUiOiJDYXJsIEd1c3RhZiIsImlhdCI6MTU4NTUwNjM0NywiZXhwIjoxNTg1NTA5OTQ3fQ.K_Ee4GAN3EE1vWjWPTJLXDp2h_dlFJ2BYRg47aWdn_Y",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
